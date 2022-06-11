@@ -1,5 +1,6 @@
 const fs = require("fs"); // fs stands for file system
 const http = require("http"); // this give sus the networking capability such as building an HTTP server
+const url = require("url");
 
 //////////////////////////////////////////////////////////////
 // Files
@@ -31,7 +32,16 @@ const http = require("http"); // this give sus the networking capability such as
 // SERVER
 
 const server = http.createServer((req, res) => {
-  res.end("Hello from the server!");
+  const pathName = req.url;
+
+  if (pathName === "/" || pathName === "/overview") {
+    res.end("This is the Overview!");
+  } else if (pathName === "/product") {
+    res.end("This is the product!");
+  } else {
+    res.writeHead(404);
+    res.end("Page not found!");
+  }
 });
 
 server.listen(8000, "127.0.0.1", () => {
